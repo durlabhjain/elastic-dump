@@ -1,6 +1,6 @@
 import fs from 'fs';
 import axios from 'axios';
-import https from 'https';
+import Agent from "agentkeepalive";
 
 const loadConfig = (files, defaultConfig) => {
     const finalConfig = { ...defaultConfig };   // beware this does shallow copy
@@ -13,12 +13,28 @@ const loadConfig = (files, defaultConfig) => {
     return finalConfig;
 }
 
+const httpAgent = new Agent({
+    maxSockets: 100,
+    maxFreeSockets: 10,
+    timeout: 60000,
+    rejectUnauthorized: false,
+    freeSocketTimeout: 30000,
+});
+
+const httpsAgent = new Agent.HttpsAgent({
+    maxSockets: 100,
+    maxFreeSockets: 10,
+    timeout: 60000,
+    rejectUnauthorized: false,
+    freeSocketTimeout: 30000,
+});
+
 const createAxiosInstance = ({ host, username, password }) => {
     return axios.create({
+
         baseURL: host,
-        httpsAgent: new https.Agent({
-            rejectUnauthorized: false
-        }),
+        httpsAgent,
+        httpAgent,
         auth: {
             username: username,
             password: password
