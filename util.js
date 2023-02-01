@@ -26,7 +26,7 @@ const createAxiosInstance = ({ host, username, password }) => {
     });
 };
 
-export default {
+export {
     loadConfig,
     createAxiosInstance
 };
