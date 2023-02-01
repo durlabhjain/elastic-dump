@@ -1,0 +1,14 @@
+{
+    "deleteIfExists": false,
+    "maxCpus": 100,
+    "source": {
+        "host": "",
+        "username": "",
+        "password": ""
+    },
+    "target": {
+        "host": "",
+        "username": "",
+        "password": ""
+    }
+}
